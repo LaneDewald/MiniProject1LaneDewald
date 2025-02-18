@@ -13,18 +13,19 @@ tickers = ["AAPL", "GOOGL", "MSFT", "AMZN", "TSLA"]
 
 stock_data = {}
 for ticker in tickers:
-    ticker = yf.Ticker(ticker)
-    hist = (ticker.history(period="10d"))
+    ticker_obj = yf.Ticker(ticker)
+    hist = (ticker_obj.history(period="10d"))
     stock_data[ticker] = hist["Close"].tolist()
     myarray = np.array(stock_data)
 
 
 for ticker, prices in stock_data.items():
-    plt.figure()  # Create a new figure for each graph
+    plt.figure()
     plt.plot(prices, label=ticker)
     plt.xlabel("Days")
     plt.ylabel("Closing Price (USD)")
-    plt.title(f"Stock Prices for {ticker} Over Last 10 Days")  # Specific title for each ticker
+    plt.grid()
+    plt.title(f"Stock Prices for {ticker} Over Last 10 Days")
     plt.legend()
     plt.show()
-
+    plt.savefig(f"Charts/{ticker}.png")
